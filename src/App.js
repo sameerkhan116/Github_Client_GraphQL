@@ -12,9 +12,9 @@ import {
 } from 'gitstar-components';
 
 // these variables need to be setup as environment variables
-const CLIENT_ID = '42f8e5389951012f1255';
-const REDIRECT_URI = 'http://localhost:3000/';
-const AUTH_API_URI = 'https://gitstart.herokuapp.com/authenticate/';
+const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
+const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
+const AUTH_API_URI = process.env.REACT_APP_AUTH_API_URI;
 
 class App extends Component {
   // need two state variables, one to keep check on status and other to keep track of tokens
@@ -31,6 +31,7 @@ class App extends Component {
        When this is done, set the state to this token and status to finished loading
   */
   componentDidMount() {
+    console.log(process.env);
     const token = localStorage.getItem('github_token');
     if (token) {
       this.setState({
