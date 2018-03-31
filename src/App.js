@@ -51,7 +51,7 @@ class App extends Component {
        When this is done, set the state to this token and status to finished loading
   */
   componentDidMount() {
-    console.log(process.env);
+    // console.log(process.env);
     const token = localStorage.getItem('github_token');
     if (token) {
       this.setState({
