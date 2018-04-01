@@ -91,6 +91,7 @@ class RepositoriesWrapper extends Component {
   }
 }
 
+// prettier-ignore
 export default compose(
   graphql(GET_REPOSITORIES, {
     props: ({ data: { error, loading, search, fetchMore } }) => {
@@ -135,7 +136,7 @@ export default compose(
                   viewerHasStarred
                 }
               `,
-              data: { viewerHasStarred: true, __typename: 'Repository' }
+              data: { viewerHasStarred: true, __typename: "Repository" }
             });
           }
         })
@@ -143,9 +144,18 @@ export default compose(
   }),
   graphql(REMOVE_STAR, {
     props: ({ mutate }) => ({
-      addStar: starrableId =>
+      removeStar: starrableId =>
         mutate({
           variables: { starrableId },
+          optimisticResponse: {
+            __typename: "Mutation",
+            removeStar: {
+              starrable: {
+                id: starrableId,
+                __typename: "Repository"
+              }
+            }
+          },
           update: proxy => {
             proxy.writeFragment({
               id: `Repository:${starrableId}`,
@@ -154,7 +164,7 @@ export default compose(
                   viewerHasStarred
                 }
               `,
-              data: { viewerHasStarred: false, __typename: 'Repository' }
+              data: { viewerHasStarred: false, __typename: "Repository" }
             });
           }
         })
